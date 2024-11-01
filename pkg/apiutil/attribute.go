@@ -2301,6 +2301,8 @@ func NewLsAttributeFromNative(a *bgp.PathAttributeLs) (*api.LsAttribute, error) 
 			Bandwidth:           float32OrDefault(attr.Link.Bandwidth),
 			ReservableBandwidth: float32OrDefault(attr.Link.ReservableBandwidth),
 			SrAdjacencySid:      uint32OrDefault(attr.Link.SrAdjacencySID),
+			UnidirectionalLinkDelay: uint32OrDefault(attr.Link.UnidirectionalLinkDelay),
+			UnidirectionalDelayVariation: uint32OrDefault(attr.Link.UnidirectionalDelayValiation),
 		},
 		Prefix: &api.LsAttributePrefix{
 			Opaque: bytesOrDefault(attr.Prefix.Opaque),
@@ -2353,6 +2355,13 @@ func NewLsAttributeFromNative(a *bgp.PathAttributeLs) (*api.LsAttribute, error) 
 
 	if attr.Link.Srlgs != nil {
 		apiAttr.Link.Srlgs = append(apiAttr.Link.Srlgs, *attr.Link.Srlgs...)
+	}
+
+	if attr.Link.MinMaxUnidirectionalLinkDelay != nil {
+		apiAttr.Link.MinMaxUnidirectionalLinkDelay = &api.LsMinMaxUnidirectionalLinkDelay{
+			MinDelay: attr.Link.MinMaxUnidirectionalLinkDelay.MinDelay,
+			MaxDelay: attr.Link.MinMaxUnidirectionalLinkDelay.MaxDelay,
+		}
 	}
 
 	if attr.Prefix.IGPFlags != nil {
