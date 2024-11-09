@@ -6001,7 +6001,7 @@ func NewLsAttributeTLVs(lsAttr *LsAttribute) []LsTLVInterface {
 	if lsAttr.Link.UnidirectionalLinkDelay != nil {
 		tlvs = append(tlvs, NewLsTLVUnidirectionalLinkDelay(lsAttr.Link.UnidirectionalLinkDelay))
 	}
-	if lsAttr.Link.MinMaxUnidirectionalLinkDelay  != nil {
+	if lsAttr.Link.MinMaxUnidirectionalLinkDelay != nil {
 		tlvs = append(tlvs, NewLsTLVMinMaxUnidirectionalLinkDelay(lsAttr.Link.MinMaxUnidirectionalLinkDelay))
 	}
 	if lsAttr.Link.UnidirectionalDelayValiation != nil {
@@ -8095,7 +8095,7 @@ func NewLsTLVUnidirectionalLinkDelay(l *uint32) *LsTLVUnidirectionalLinkDelay {
 	var flags uint8
 	return &LsTLVUnidirectionalLinkDelay{
 		LsTLV: LsTLV{
-			Type: LS_TLV_UNIDIRECTIONAL_LINK_DELAY,
+			Type:   LS_TLV_UNIDIRECTIONAL_LINK_DELAY,
 			Length: 4,
 		},
 		Flags: flags,
@@ -8114,7 +8114,7 @@ func (l *LsTLVUnidirectionalLinkDelay) DecodeFromBytes(data []byte) error {
 	}
 
 	// https://datatracker.ietf.org/doc/html/rfc8571#section-2.1
-	if len(value) != 4  {
+	if len(value) != 4 {
 		return malformedAttrListErr("Incorrect Unidirectional Link Delay length")
 	}
 
@@ -8153,18 +8153,18 @@ func (l *LsTLVUnidirectionalLinkDelay) String() string {
 
 func (l *LsTLVUnidirectionalLinkDelay) MarshalJSON() ([]byte, error) {
 	return json.Marshal(struct {
-		Type LsTLVType `json:"type"`
-		UnidirectionalLinkDelay  uint32    `json:"unidirectional_link_delay"`
+		Type                    LsTLVType `json:"type"`
+		UnidirectionalLinkDelay uint32    `json:"unidirectional_link_delay"`
 	}{
-		Type: l.Type,
-		UnidirectionalLinkDelay:  l.Delay,
+		Type:                    l.Type,
+		UnidirectionalLinkDelay: l.Delay,
 	})
 }
 
 // https://datatracker.ietf.org/doc/html/rfc8571#section-2.2
 type LsTLVMinMaxUnidirectionalLinkDelay struct {
 	LsTLV
-	Flags uint8
+	Flags    uint8
 	MinDelay uint32
 	MaxDelay uint32
 }
@@ -8173,10 +8173,10 @@ func NewLsTLVMinMaxUnidirectionalLinkDelay(l *LsMinMaxUnidirectionalLinkDelay) *
 	var flags uint8
 	return &LsTLVMinMaxUnidirectionalLinkDelay{
 		LsTLV: LsTLV{
-			Type: LS_TLV_MIN_MAX_UNIDIRECTIONAL_LINK_DELAY,
+			Type:   LS_TLV_MIN_MAX_UNIDIRECTIONAL_LINK_DELAY,
 			Length: 8,
 		},
-		Flags: flags,
+		Flags:    flags,
 		MinDelay: l.MinDelay,
 		MaxDelay: l.MaxDelay,
 	}
@@ -8205,7 +8205,7 @@ func (l *LsTLVMinMaxUnidirectionalLinkDelay) DecodeFromBytes(data []byte) error 
 	}
 
 	// https://datatracker.ietf.org/doc/html/rfc8571#section-2.2
-	if len(value) != 8  {
+	if len(value) != 8 {
 		return malformedAttrListErr("Incorrect Min/Max Unidirectional Link Delay length")
 	}
 
@@ -8217,7 +8217,7 @@ func (l *LsTLVMinMaxUnidirectionalLinkDelay) DecodeFromBytes(data []byte) error 
 		buf1[i] = v1[i-1]
 	}
 	l.MinDelay = binary.BigEndian.Uint32(buf1) & 0xfffff
-	
+
 	v2 := value[5:]
 	buf2 := []byte{0, 0, 0, 0}
 	for i := 1; i < len(buf2); i++ {
@@ -8251,12 +8251,12 @@ func (l *LsTLVMinMaxUnidirectionalLinkDelay) String() string {
 
 func (l *LsTLVMinMaxUnidirectionalLinkDelay) MarshalJSON() ([]byte, error) {
 	return json.Marshal(struct {
-		Type LsTLVType `json:"type"`
-		MinUnidirectionalLinkDelay uint32 `json:"min_unidirectional_link_delay"`
-		MaxUnidirectionalLinkDelay uint32 `json:"max_unidirectional_link_delay"`
+		Type                       LsTLVType `json:"type"`
+		MinUnidirectionalLinkDelay uint32    `json:"min_unidirectional_link_delay"`
+		MaxUnidirectionalLinkDelay uint32    `json:"max_unidirectional_link_delay"`
 	}{
-		Type: l.Type,
-		MinUnidirectionalLinkDelay:  l.MinDelay,
+		Type:                       l.Type,
+		MinUnidirectionalLinkDelay: l.MinDelay,
 		MaxUnidirectionalLinkDelay: l.MaxDelay,
 	})
 }
@@ -8270,7 +8270,7 @@ type LsTLVUnidirectionalDelayVariation struct {
 func NewLsTLVUnidirectionalDelayVariation(l *uint32) *LsTLVUnidirectionalDelayVariation {
 	return &LsTLVUnidirectionalDelayVariation{
 		LsTLV: LsTLV{
-			Type: LS_TLV_UNIDIRECTIONAL_DELAY_VARIATION,
+			Type:   LS_TLV_UNIDIRECTIONAL_DELAY_VARIATION,
 			Length: 4,
 		},
 		Variation: *l,
@@ -8288,7 +8288,7 @@ func (l *LsTLVUnidirectionalDelayVariation) DecodeFromBytes(data []byte) error {
 	}
 
 	// https://datatracker.ietf.org/doc/html/rfc8571#section-2.3
-	if len(value) != 4  {
+	if len(value) != 4 {
 		return malformedAttrListErr("Incorrect Unidirectional Delay Variation length")
 	}
 
@@ -8299,7 +8299,7 @@ func (l *LsTLVUnidirectionalDelayVariation) DecodeFromBytes(data []byte) error {
 		buf[i] = v[i-1]
 	}
 	l.Variation = binary.BigEndian.Uint32(buf) & 0xfffff
-	
+
 	return nil
 }
 
@@ -8324,11 +8324,11 @@ func (l *LsTLVUnidirectionalDelayVariation) String() string {
 
 func (l *LsTLVUnidirectionalDelayVariation) MarshalJSON() ([]byte, error) {
 	return json.Marshal(struct {
-		Type LsTLVType `json:"type"`
-		UnidirectionalLinkDelay  uint32    `json:"unidirectional_delay_variation"`
+		Type                    LsTLVType `json:"type"`
+		UnidirectionalLinkDelay uint32    `json:"unidirectional_delay_variation"`
 	}{
-		Type: l.Type,
-		UnidirectionalLinkDelay:  l.Variation,
+		Type:                    l.Type,
+		UnidirectionalLinkDelay: l.Variation,
 	})
 }
 
@@ -9496,9 +9496,9 @@ type LsAttributeLink struct {
 	SrAdjacencySID *uint32 `json:"adjacency_sid,omitempty"`
 
 	// delay metric
-	UnidirectionalLinkDelay *uint32 `json:"unidirectional_link_delay,omitempty"`
+	UnidirectionalLinkDelay       *uint32                          `json:"unidirectional_link_delay,omitempty"`
 	MinMaxUnidirectionalLinkDelay *LsMinMaxUnidirectionalLinkDelay `json:"min/max_unidirectional_link_delay,omitempty"`
-	UnidirectionalDelayValiation *uint32 `json:"unidirectional_delay_variation,omitempty"`
+	UnidirectionalDelayValiation  *uint32                          `json:"unidirectional_delay_variation,omitempty"`
 }
 
 type LsAttributePrefix struct {
@@ -9595,13 +9595,13 @@ func (p *PathAttributeLs) Extract() *LsAttribute {
 
 		case *LsTLVAdjacencySID:
 			l.Link.SrAdjacencySID = &v.SID
-		
+
 		case *LsTLVUnidirectionalLinkDelay:
 			l.Link.UnidirectionalLinkDelay = &v.Delay
-		
+
 		case *LsTLVMinMaxUnidirectionalLinkDelay:
 			l.Link.MinMaxUnidirectionalLinkDelay = v.Extract()
-		
+
 		case *LsTLVUnidirectionalDelayVariation:
 			l.Link.UnidirectionalDelayValiation = &v.Variation
 
@@ -9734,14 +9734,14 @@ func (p *PathAttributeLs) DecodeFromBytes(data []byte, options ...*MarshallingOp
 			tlv = &LsTLVPeerSetSID{}
 
 		// delay-metric related TLVs
-		case LS_TLV_UNIDIRECTIONAL_LINK_DELAY: 
+		case LS_TLV_UNIDIRECTIONAL_LINK_DELAY:
 			tlv = &LsTLVUnidirectionalLinkDelay{}
-		
+
 		case LS_TLV_MIN_MAX_UNIDIRECTIONAL_LINK_DELAY:
 			tlv = &LsTLVMinMaxUnidirectionalLinkDelay{}
-		
+
 		case LS_TLV_UNIDIRECTIONAL_DELAY_VARIATION:
-			tlv = & LsTLVUnidirectionalDelayVariation{}
+			tlv = &LsTLVUnidirectionalDelayVariation{}
 
 		default:
 			tlvs = tlvs[t.Len():]

@@ -2298,10 +2298,10 @@ func NewLsAttributeFromNative(a *bgp.PathAttributeLs) (*api.LsAttribute, error) 
 			DefaultTeMetric:  uint32OrDefault(attr.Link.DefaultTEMetric),
 			IgpMetric:        uint32OrDefault(attr.Link.IGPMetric),
 
-			Bandwidth:           float32OrDefault(attr.Link.Bandwidth),
-			ReservableBandwidth: float32OrDefault(attr.Link.ReservableBandwidth),
-			SrAdjacencySid:      uint32OrDefault(attr.Link.SrAdjacencySID),
-			UnidirectionalLinkDelay: uint32OrDefault(attr.Link.UnidirectionalLinkDelay),
+			Bandwidth:                    float32OrDefault(attr.Link.Bandwidth),
+			ReservableBandwidth:          float32OrDefault(attr.Link.ReservableBandwidth),
+			SrAdjacencySid:               uint32OrDefault(attr.Link.SrAdjacencySID),
+			UnidirectionalLinkDelay:      uint32OrDefault(attr.Link.UnidirectionalLinkDelay),
 			UnidirectionalDelayVariation: uint32OrDefault(attr.Link.UnidirectionalDelayValiation),
 		},
 		Prefix: &api.LsAttributePrefix{
